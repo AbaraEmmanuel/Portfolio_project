@@ -9,6 +9,14 @@ class Database:
         self.cur.execute("CREATE TABLE IF NOT EXISTS user (username TEXT PRIMARY KEY, password TEXT)")
         self.conn.commit()
 
+    def user_exists(self, username):
+        self.cur.execute("SELECT * FROM user WHERE username = ?", (username,))
+        return self.cur.fetchone() is not None
+
+    def add_user(self, username, password):
+        self.cur.execute("INSERT INTO user VALUES (?, ?)", (username, password))
+        self.conn.commit()
+
     def insertRecord(self, item_name, item_price, purchase_date):
         self.cur.execute("INSERT INTO expense_record VALUES (?, ?, ?)", (item_name, item_price, purchase_date))
         self.conn.commit()

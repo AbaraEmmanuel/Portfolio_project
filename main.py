@@ -39,66 +39,66 @@ class ExpenseApp:
 
         # Action buttons
         self.cur_date = Button(
-            self.f1, 
-            text='Current Date', 
-            bg='#04C4D9', 
+            self.f1,
+            text='Current Date',
+            bg='#04C4D9',
             command=self.set_date,
             width=15
         )
 
         self.submit_btn = Button(
-            self.f1, 
-            text='Save Record', 
-            command=self.save_record, 
-            bg='#42602D', 
+            self.f1,
+            text='Save Record',
+            command=self.save_record,
+            bg='#42602D',
             fg='white'
         )
 
         self.clear_btn = Button(
-            self.f1, 
-            text='Clear Entry', 
-            command=self.clear_entries, 
-            bg='#D9B036', 
+            self.f1,
+            text='Clear Entry',
+            command=self.clear_entries,
+            bg='#D9B036',
             fg='white'
         )
 
         self.update_btn = Button(
-            self.f1, 
-            text='Update', 
-            command=self.update_record, 
-            bg='#C2BB00', 
+            self.f1,
+            text='Update',
+            command=self.update_record,
+            bg='#C2BB00',
             fg='white'
         )
 
         self.delete_btn = Button(
-            self.f1, 
-            text='Delete', 
-            command=self.delete_record, 
-            bg='#BD2A2E', 
+            self.f1,
+            text='Delete',
+            command=self.delete_record,
+            bg='#BD2A2E',
             fg='white'
         )
 
         self.exit_btn = Button(
-            self.f1, 
-            text='Exit', 
-            command=self.on_exit, 
-            bg='#D33532', 
+            self.f1,
+            text='Exit',
+            command=self.on_exit,
+            bg='#D33532',
             fg='white'
         )
 
         self.total_bal_btn = Button(
-            self.f1, 
-            text='Total Balance', 
-            command=self.show_total_balance, 
-            bg='#486966', 
+            self.f1,
+            text='Total Balance',
+            command=self.show_total_balance,
+            bg='#486966',
             fg='white'
         )
 
         self.budget_btn = Button(
-            self.f1, 
-            text='Set Budget', 
-            command=self.set_budget, 
-            bg='#0066ff', 
+            self.f1,
+            text='Set Budget',
+            command=self.set_budget,
+            bg='#0066ff',
             fg='white'
         )
 
@@ -244,7 +244,7 @@ class ExpenseApp:
         total_expense = total_expense_row[0] if total_expense_row[0] is not None else 0
 
         # Fetch monthly budget from database each time the method is called
-        monthly_budget = self.data.fetchBudget() 
+        monthly_budget = self.data.fetchBudget()
 
         # Calculate balance correctly
         total_balance = monthly_budget - total_expense
@@ -273,14 +273,16 @@ class ExpenseApp:
         self.data.removeRecord('DELETE FROM expense_record')
 
     def on_exit(self):
-        if self.data.fetchBudget() != self.budget or self.data.fetchRecord('SELECT COUNT(*) FROM expense_record')[0][0] > 0:
-            if messagebox.askyesno('Exit', 'Do you want to save before exiting?'):
-                self.save_data()
-                root.destroy()
+        if self.root.winfo_exists():
+            if self.data.fetchBudget() != self.budget or self.data.fetchRecord('SELECT COUNT(*) FROM expense_record')[0][0] > 0:
+                if messagebox.askyesno('Exit', 'Do you want to save before exiting?'):
+                    self.save_data()
+                    self.root.destroy()
+                else:
+                    self.root.destroy()
             else:
-                root.destroy()
-        else:
-            root.destroy()
+                self.root.destroy()
+
 
 
 class LoginWindow:
@@ -314,7 +316,6 @@ class LoginWindow:
             messagebox.showinfo("Login Successful", "Welcome!")
             self.root.destroy()
             self.app = ExpenseApp(Tk())
-            self.app.start_expense_app()
         else:
             messagebox.showerror("Login Failed", "Invalid username or password")
 
