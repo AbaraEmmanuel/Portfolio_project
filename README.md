@@ -46,6 +46,7 @@ On bash;
 ``python main.py``
 
 **Usage**
+
 __Login or Signup__: If you're a new user, sign up for an account. Otherwise, log in with your credentials.
 
 __Set Monthly Budget__: Set your monthly budget to keep track of your expenses.
