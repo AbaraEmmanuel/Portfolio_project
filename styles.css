@@ -59,6 +59,28 @@ section h2 {
     margin-top: 0;
 }
 
+/* Make images responsive */
+.cover-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Additional styling for smaller screens */
+@media (max-width: 600px) {
+    .cover-image {
+        width: 100%;
+        height: auto;
+    }
+}
+
+/* Additional styling for larger screens */
+@media (min-width: 601px) {
+    .cover-image {
+        width: auto;
+        max-width: 100%;
+    }
+}
+
 .feature {
     text-align: center;
     margin-bottom: 50px;
